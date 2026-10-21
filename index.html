@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Interativo - Verdade ou Fake?</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Meu Dashboard: Verdade ou Fake?</h1>
+  <p class="subtitle">Análise dos hábitos de consumo de informação e reação a conteúdos suspeitos/deepfakes</p>
+
+  <!-- Filtro Interativo -->
+  <div class="filter-section">
+    <label for="channelFilter">3. Filtro Interativo (Canal de Notícias):</label>
+    <select id="channelFilter" onchange="updateDashboard()">
+      <option value="all">Todos os Canais (21 alunos)</option>
+      <option value="social">Apenas Redes Sociais / Vídeos (19 alunos)</option>
+      <option value="none">Não costumo acompanhar notícias (2 alunos)</option>
+    </select>
+  </div>
+
+  <!-- Cards Rápidos -->
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-title">Total de Respostas</div>
+      <div class="card-value" id="cardTotal">21</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Acreditaram / Compartilharam</div>
+      <div class="card-value" id="cardAcreditaram" style="color: #ef4444;">2 (9,5%)</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Pesquisaram no Google</div>
+      <div class="card-value" id="cardPesquisaram" style="color: #10b981;">8 (38,1%)</div>
+    </div>
+  </div>
+
+  <!-- Gráficos / Tabelas -->
+  <div class="charts-grid">
+    
+    <!-- Gráfico 1 -->
+    <div class="chart-box">
+      <h2>1. Gráfico de Pizza (Canais de Informação)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Canal</th>
+            <th style="text-align: right;">Qtd</th>
+            <th style="text-align: right;">%</th>
+          </tr>
+        </thead>
+        <tbody id="canalTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Gráfico 2 -->
+    <div class="chart-box">
+      <h2>2. Gráfico de Barras (Reação ao Vídeo)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Reação</th>
+            <th style="text-align: right;">Qtd</th>
+            <th style="text-align: right;">%</th>
+          </tr>
+        </thead>
+        <tbody id="reacaoTableBody"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
