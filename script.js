@@ -1,4 +1,3 @@
-// Dados brutos das 21 respostas do formulário
 const data = [
   { canal: "Redes Sociais", reacao: "Ignorei" },
   { canal: "Redes Sociais", reacao: "Pesquisei no Google" },
@@ -42,55 +41,78 @@ function updateDashboard() {
   const countGoogle = filteredData.filter(d => d.reacao === "Pesquisei no Google").length;
   const countShare = filteredData.filter(d => d.reacao === "Acreditei e Compartilhei").length;
 
+  // Atualizar cards
   document.getElementById("cardTotal").innerText = total;
   document.getElementById("cardAcreditaram").innerText = `${countShare} (${total ? ((countShare/total)*100).toFixed(1) : 0}%)`;
   document.getElementById("cardPesquisaram").innerText = `${countGoogle} (${total ? ((countGoogle/total)*100).toFixed(1) : 0}%)`;
 
-  // Atualiza Tabela / Gráfico 1
+  // Tabela 1: Canais
   const canalBody = document.getElementById("canalTableBody");
+  const socialPct = total ? ((countSocial/total)*100).toFixed(1) : 0;
+  const nonePct = total ? ((countNone/total)*100).toFixed(1) : 0;
+
   canalBody.innerHTML = `
     <tr>
-      <td>Redes Sociais / Vídeos</td>
-      <td style="text-align: right;"><b>${countSocial}</b></td>
-      <td style="text-align: right;">${total ? ((countSocial/total)*100).toFixed(1) : 0}%
-        <div class="bar-container"><div class="bar-fill bg-blue" style="width: ${total ? (countSocial/total)*100 : 0}%"></div></div>
+      <td>📱 Redes Sociais / Vídeos</td>
+      <td class="text-right">${countSocial}</td>
+      <td class="text-right">
+        <div class="bar-wrapper">
+          <span>${socialPct}%</span>
+          <div class="progress-bar"><div class="progress-fill bg-primary-fill" style="width: ${socialPct}%"></div></div>
+        </div>
       </td>
     </tr>
     <tr>
-      <td>Não costuma acompanhar</td>
-      <td style="text-align: right;"><b>${countNone}</b></td>
-      <td style="text-align: right;">${total ? ((countNone/total)*100).toFixed(1) : 0}%
-        <div class="bar-container"><div class="bar-fill bg-amber" style="width: ${total ? (countNone/total)*100 : 0}%"></div></div>
+      <td>🚫 Não costuma acompanhar</td>
+      <td class="text-right">${countNone}</td>
+      <td class="text-right">
+        <div class="bar-wrapper">
+          <span>${nonePct}%</span>
+          <div class="progress-bar"><div class="progress-fill bg-amber-fill" style="width: ${nonePct}%"></div></div>
+        </div>
       </td>
     </tr>
   `;
 
-  // Atualiza Tabela / Gráfico 2
+  // Tabela 2: Reações
   const reacaoBody = document.getElementById("reacaoTableBody");
+  const ignorePct = total ? ((countIgnore/total)*100).toFixed(1) : 0;
+  const googlePct = total ? ((countGoogle/total)*100).toFixed(1) : 0;
+  const sharePct = total ? ((countShare/total)*100).toFixed(1) : 0;
+
   reacaoBody.innerHTML = `
     <tr>
-      <td>Ignorei</td>
-      <td style="text-align: right;"><b>${countIgnore}</b></td>
-      <td style="text-align: right;">${total ? ((countIgnore/total)*100).toFixed(1) : 0}%
-        <div class="bar-container"><div class="bar-fill bg-amber" style="width: ${total ? (countIgnore/total)*100 : 0}%"></div></div>
+      <td>🙈 Ignorei</td>
+      <td class="text-right">${countIgnore}</td>
+      <td class="text-right">
+        <div class="bar-wrapper">
+          <span>${ignorePct}%</span>
+          <div class="progress-bar"><div class="progress-fill bg-amber-fill" style="width: ${ignorePct}%"></div></div>
+        </div>
       </td>
     </tr>
     <tr>
-      <td>Pesquisei no Google</td>
-      <td style="text-align: right;"><b>${countGoogle}</b></td>
-      <td style="text-align: right;">${total ? ((countGoogle/total)*100).toFixed(1) : 0}%
-        <div class="bar-container"><div class="bar-fill bg-emerald" style="width: ${total ? (countGoogle/total)*100 : 0}%"></div></div>
+      <td>🔍 Pesquisei no Google</td>
+      <td class="text-right">${countGoogle}</td>
+      <td class="text-right">
+        <div class="bar-wrapper">
+          <span>${googlePct}%</span>
+          <div class="progress-bar"><div class="progress-fill bg-emerald-fill" style="width: ${googlePct}%"></div></div>
+        </div>
       </td>
     </tr>
     <tr>
-      <td>Acreditei e Compartilhei</td>
-      <td style="text-align: right;"><b>${countShare}</b></td>
-      <td style="text-align: right;">${total ? ((countShare/total)*100).toFixed(1) : 0}%
-        <div class="bar-container"><div class="bar-fill bg-rose" style="width: ${total ? (countShare/total)*100 : 0}%"></div></div>
+      <td>📢 Acreditei e Compartilhei</td>
+      <td class="text-right">${countShare}</td>
+      <td class="text-right">
+        <div class="bar-wrapper">
+          <span>${sharePct}%</span>
+          <div class="progress-bar"><div class="progress-fill bg-rose-fill" style="width: ${sharePct}%"></div></div>
+        </div>
       </td>
     </tr>
   `;
 }
 
-// Executa ao carregar a página
+// Inicializar
 updateDashboard();
