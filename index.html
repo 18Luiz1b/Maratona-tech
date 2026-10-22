@@ -7,14 +7,172 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Chart.js via CDN seguro -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  
+  <style>
+    :root {
+      --purple-header: #4c1d95;
+      --purple-accent: #6d28d9;
+      --bg-window: #5b21b6;
+      --card-bg: #ffffff;
+      --font-family: 'Nunito', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: #4c1d95;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Janela Principal do App */
+    .app-window {
+      background-color: #6d28d9;
+      width: 100%;
+      max-width: 900px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      display: flex;
+      overflow: hidden;
+      border: 3px solid #8b5cf6;
+      padding: 10px;
+    }
+
+    /* Sidebar Lateral */
+    .sidebar {
+      background: #eef2ff;
+      width: 60px;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      gap: 16px;
+      margin-right: 12px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      color: #6366f1;
+    }
+
+    .icon-btn.active {
+      background-color: #c7d2fe;
+      color: #3730a3;
+    }
+
+    /* Conteúdo Principal */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Barra Roxa de Topo */
+    .topbar {
+      background-color: #431407;
+      background: linear-gradient(90deg, #3730a3 0%, #4c1d95 100%);
+      border-radius: 12px;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #ffffff;
+      border: 1px solid #818cf8;
+    }
+
+    .topbar h1 {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .filter-wrapper select {
+      background: #ffffff;
+      color: #1e1b4b;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-family: var(--font-family);
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* Área dos Gráficos */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .chart-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-card h3 {
+      font-size: 12px;
+      color: #2563eb;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .chart-card h2 {
+      font-size: 14px;
+      color: #1e293b;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .chart-box {
+      position: relative;
+      height: 220px;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .app-window {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        padding: 8px;
+        margin-bottom: 10px;
+      }
+      .charts-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="window-container">
-  <!-- Sidebar lateral -->
+<div class="app-window">
+  <!-- Menu Lateral -->
   <aside class="sidebar">
     <div class="icon-btn active">🏠</div>
     <div class="icon-btn">📊</div>
@@ -22,9 +180,8 @@
     <div class="icon-btn">⚙️</div>
   </aside>
 
-  <!-- Conteúdo Principal -->
+  <!-- Conteúdo -->
   <main class="main-content">
-    <!-- Topbar Roxa -->
     <header class="topbar">
       <h1>Meu Dashboard: Verdade ou Fake?</h1>
       <div class="filter-wrapper">
@@ -36,9 +193,8 @@
       </div>
     </header>
 
-    <!-- Gráficos Lado a Lado -->
     <div class="charts-row">
-      <!-- Card Gráfico 1 -->
+      <!-- Gráfico 1: Pizza -->
       <div class="chart-card">
         <h3>Gráfico 1</h3>
         <h2>Onde a turma consome notícias?</h2>
@@ -47,7 +203,7 @@
         </div>
       </div>
 
-      <!-- Card Gráfico 2 -->
+      <!-- Gráfico 2: Barras -->
       <div class="chart-card">
         <h3>Gráfico 2</h3>
         <h2>Reação ao vídeo do canguru</h2>
@@ -59,6 +215,108 @@
   </main>
 </div>
 
-<script src="script.js"></script>
+<script>
+  // Dados brutos da pesquisa
+  const data = [
+    { canal: "Redes Sociais", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Ficaram na dúvida e Pesquisaram" },
+    { canal: "Redes Sociais", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Ficaram na dúvida e Pesquisaram" },
+    { canal: "Redes Sociais", reacao: "Ficaram na dúvida e Pesquisaram" },
+    { canal: "Redes Sociais", reacao: "Ficaram na dúvida e Pesquisaram" },
+    { canal: "Redes Sociais", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Ficaram na dúvida e Pesquisaram" },
+    { canal: "Redes Sociais", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Acreditaram e Compartilharam" },
+    { canal: "Redes Sociais", reacao: "Ficaram na dúvida e Pesquisaram" },
+    { canal: "Não Acompanha", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Ficaram na dúvida e Pesquisaram" },
+    { canal: "Redes Sociais", reacao: "Ficaram na dúvida e Pesquisaram" },
+    { canal: "Não Acompanha", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Ignorei" },
+    { canal: "Redes Sociais", reacao: "Acreditaram e Compartilharam" }
+  ];
+
+  let pieChartInstance = null;
+  let barChartInstance = null;
+
+  function updateDashboard() {
+    const filter = document.getElementById("channelFilter").value;
+    
+    let filteredData = data;
+    if (filter === "social") {
+      filteredData = data.filter(d => d.canal === "Redes Sociais");
+    } else if (filter === "none") {
+      filteredData = data.filter(d => d.canal === "Não Acompanha");
+    }
+
+    const countSocial = filteredData.filter(d => d.canal === "Redes Sociais").length;
+    const countNone = filteredData.filter(d => d.canal === "Não Acompanha").length;
+
+    const countShare = filteredData.filter(d => d.reacao === "Acreditaram e Compartilharam").length;
+    const countSearch = filteredData.filter(d => d.reacao === "Ficaram na dúvida e Pesquisaram").length;
+
+    // Renderizar Pizza
+    const ctxPie = document.getElementById('pieChart').getContext('2d');
+    if (pieChartInstance) pieChartInstance.destroy();
+
+    pieChartInstance = new Chart(ctxPie, {
+      type: 'pie',
+      data: {
+        labels: ['Redes Sociais', 'Portais de Notícias', 'TV', 'Outros'],
+        datasets: [{
+          data: [countSocial, 0, 0, countNone],
+          backgroundColor: ['#2563eb', '#38bdf8', '#8b5cf6', '#eab308']
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right',
+            labels: { font: { family: 'Nunito', size: 11, weight: '700' } }
+          }
+        }
+      }
+    });
+
+    // Renderizar Barras
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    if (barChartInstance) barChartInstance.destroy();
+
+    barChartInstance = new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['Acreditaram e Compartilharam', 'Ficaram na dúvida e Pesquisaram'],
+        datasets: [{
+          data: [countShare, countSearch],
+          backgroundColor: ['#7c3aed', '#38bdf8'],
+          borderRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  }
+
+  // Garante que o Chart.js carrega antes de gerar
+  window.onload = function() {
+    updateDashboard();
+  };
+</script>
 </body>
 </html>
