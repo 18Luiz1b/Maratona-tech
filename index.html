@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Completo - Verdade ou Fake?</title>
+  <title>Meu Dashboard: Verdade ou Fake?</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Chart.js via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   
   <style>
@@ -20,10 +21,14 @@
       --accent-cyan: #0284c7;
       --accent-amber: #d97706;
       --accent-rose: #dc2626;
-      --radius: 12px;
+      --radius: 14px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -34,30 +39,34 @@
     }
 
     .dashboard-app {
-      max-width: 1050px;
+      max-width: 1000px;
       margin: 0 auto;
       background: var(--surface);
-      border-radius: 16px;
+      border-radius: 20px;
       border: 1px solid var(--border);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       overflow: hidden;
     }
 
+    /* Cabeçalho Principal */
     .header {
       background: #1e1b4b;
       color: #ffffff;
       padding: 24px 32px;
     }
 
-    .header h1 { font-size: 22px; font-weight: 800; }
-    .header p { font-size: 13px; color: #cbd5e1; margin-top: 4px; }
+    .header h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
 
-    /* Bloco 1: Estrutura da Pesquisa */
+    /* Bloco de Informações do Projeto */
     .research-info-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
-      padding: 24px 32px 12px 32px;
+      padding: 24px 32px 16px 32px;
       background: #f1f5f9;
       border-bottom: 1px solid var(--border);
     }
@@ -78,9 +87,13 @@
       margin-bottom: 4px;
     }
 
-    .info-card p { font-size: 13px; font-weight: 600; color: var(--text-main); }
+    .info-card p {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
 
-    /* Control Bar com Filtro Interativo */
+    /* Control Bar - Filtro Interativo */
     .filter-bar {
       padding: 16px 32px;
       background: #ffffff;
@@ -92,7 +105,11 @@
       gap: 12px;
     }
 
-    .filter-bar label { font-size: 13px; font-weight: 700; }
+    .filter-bar label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
 
     .filter-bar select {
       padding: 8px 16px;
@@ -102,9 +119,11 @@
       font-weight: 700;
       font-size: 13px;
       cursor: pointer;
+      outline: none;
+      background-color: #f8fafc;
     }
 
-    /* Gráficos */
+    /* Gráficos Lado a Lado */
     .charts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -119,10 +138,20 @@
       padding: 20px;
     }
 
-    .chart-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
-    .chart-container { position: relative; height: 230px; width: 100%; }
+    .chart-card h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
 
-    /* Análises Finais */
+    .chart-container {
+      position: relative;
+      height: 240px;
+      width: 100%;
+    }
+
+    /* Seção de Conclusões e Análises */
     .analysis-section {
       padding: 0 32px 32px 32px;
       display: flex;
@@ -141,29 +170,42 @@
       font-size: 14px;
       font-weight: 800;
       color: var(--primary);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    .analysis-block p { font-size: 13px; color: var(--text-main); }
+    .analysis-block p {
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
+    @media (max-width: 768px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+      .research-info-grid, .filter-bar, .charts-grid, .analysis-section, .header {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
   </style>
 </head>
 <body>
 
 <div class="dashboard-app">
+  <!-- Cabeçalho -->
   <header class="header">
-    <h1>Dashboard Interativo - Investigação de Dados</h1>
-    <p>Projeto: Hábitos de Consumo de Informação e Desinformação</p>
+    <h1>Meu Dashboard: Verdade ou Fake?</h1>
   </header>
 
-  <!-- Estrutura Inicial da Pesquisa -->
+  <!-- Informações do Projeto -->
   <section class="research-info-grid">
     <div class="info-card">
       <h4>Tema</h4>
-      <p>Hábitos de Informação e Reação a Deepfakes/Fake News</p>
+      <p>Desinformação e Hábitos de Consumo de Informação dos Estudantes</p>
     </div>
     <div class="info-card">
       <h4>Pergunta de Pesquisa</h4>
-      <p>Qual é a reação primária dos estudantes ao verem vídeos suspeitos de figuras públicas?</p>
+      <p>"Qual é a reação primária dos estudantes ao se depararem com um vídeo surpreendente de uma figura pública nas redes sociais?"</p>
     </div>
     <div class="info-card">
       <h4>Hipótese Inicial</h4>
@@ -171,7 +213,7 @@
     </div>
   </section>
 
-  <!-- Filtro Conectado -->
+  <!-- Filtro Interativo no Topo -->
   <div class="filter-bar">
     <label for="channelFilter">⚙️ Filtro Interativo (Canal de Notícias):</label>
     <select id="channelFilter" onchange="updateDashboard()">
@@ -181,42 +223,43 @@
     </select>
   </div>
 
-  <!-- Gráficos Complementares -->
+  <!-- Gráficos -->
   <main class="charts-grid">
     <div class="chart-card">
-      <h3>Gráfico 1: Origem das Notícias</h3>
+      <h3>Gráfico 1: Canais de Notícias</h3>
       <div class="chart-container">
         <canvas id="pieChart"></canvas>
       </div>
     </div>
     <div class="chart-card">
-      <h3>Gráfico 2: Reação ao Conteúdo Suspeito</h3>
+      <h3>Gráfico 2: Reação ao Vídeo Suspeito</h3>
       <div class="chart-container">
         <canvas id="barChart"></canvas>
       </div>
     </div>
   </main>
 
-  <!-- Conclusões e Validações da IA -->
+  <!-- Análises, Conclusão e Relação com a Hipótese -->
   <section class="analysis-section">
     <div class="analysis-block">
-      <h3>1. Conclusão Final da Investigação</h3>
-      <p>A pesquisa revelou que a maioria dos estudantes adota uma atitude de cautela (52,4% ignoram conteúdos suspeitos e 38,1% pesquisam no Google para checar a veracidade). Apenas 9,5% propagam o conteúdo sem checar.</p>
+      <h3>Conclusão Final da Investigação</h3>
+      <p>A grande maioria dos estudantes não aceita o conteúdo suspeito passivamente. Diante de um vídeo surpreendente, a reação predominante é ignorar o conteúdo (52,4%) ou adotar uma postura investigativa de checagem no Google (38,1%). Apenas uma minoria (9,5%) atua como vetor de proliferação da desinformação ao acreditar e compartilhar de imediato.</p>
     </div>
 
     <div class="analysis-block">
-      <h3>2. Verificação Crítica da IA</h3>
-      <p><strong>Concordo com a análise da IA.</strong> A evidência quantitativa provou que 90,5% dos entrevistados (19 em 21) não aceitam a informação passivamente sem antes desconfiar ou checar no Google.</p>
+      <h3>Verificação Crítica da IA</h3>
+      <p><strong>Concordo com a análise da IA.</strong> Os números brutos da base provam que 19 dos 21 alunos (90,5%) não compartilharam a informação precipitadamente. A soma dos estudantes que ignoraram (11) ou foram pesquisar no Google (8) supera amplamente os que demonstraram credulidade cega (2).</p>
     </div>
 
     <div class="analysis-block">
-      <h3>3. Relação com a Hipótese</h3>
-      <p>A aposta inicial de que os alunos acreditariam de imediato foi <strong>REFUTADA</strong>. Ao alternar o <em>Filtro Interativo</em> para o grupo de maior consumo ("Apenas Redes Sociais"), o gráfico demonstrou que a checagem no Google (8 alunos) e a postura de ignorar (9 alunos) continuam sendo maioria esmagadora frente aos que acreditaram (2 alunos).</p>
+      <h3>Relação com a Hipótese</h3>
+      <p>A hipótese inicial foi <strong>REFUTADA</strong>. Ao acionar o <em>Filtro Interativo</em> e isolar o grupo que consome conteúdo "Apenas em Redes Sociais / Vídeos" (19 alunos), os dados revelaram que 8 alunos checam no Google e 9 ignoram, mantendo os mesmos 2 únicos alunos que acreditaram. Isso prova que o consumo de notícias por redes sociais não se traduz em aceitação ingênua ou automática.</p>
     </div>
   </section>
 </div>
 
 <script>
+  // Dados brutos exatos extraídos da sua planilha do Google Forms
   const sheetData = [
     { canal: "Redes Sociais", reacao: "Ignorei" },
     { canal: "Redes Sociais", reacao: "Fiquei na dúvida e fui pesquisar no Google" },
@@ -261,32 +304,73 @@
     const countSearch = filtered.filter(d => d.reacao === "Fiquei na dúvida e fui pesquisar no Google").length;
     const countShare = filtered.filter(d => d.reacao === "Acreditei e comentei/compartilhei").length;
 
-    // Pizza
+    // Renderizar Gráfico de Pizza (Doughnut)
     const ctxPie = document.getElementById('pieChart').getContext('2d');
     if (pieChartInstance) pieChartInstance.destroy();
+    
     pieChartInstance = new Chart(ctxPie, {
       type: 'doughnut',
       data: {
-        labels: ['Redes Sociais', 'Não acompanha'],
-        datasets: [{ data: [countSocial, countNone], backgroundColor: ['#4f46e5', '#d97706'] }]
+        labels: ['Redes Sociais / Vídeos', 'Não acompanha notícias'],
+        datasets: [{
+          data: [countSocial, countNone],
+          backgroundColor: ['#4f46e5', '#d97706'],
+          borderWidth: 0
+        }]
       },
-      options: { responsive: true, maintainAspectRatio: false }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' } }
+          }
+        },
+        cutout: '60%'
+      }
     });
 
-    // Barras
+    // Renderizar Gráfico de Barras
     const ctxBar = document.getElementById('barChart').getContext('2d');
     if (barChartInstance) barChartInstance.destroy();
+
     barChartInstance = new Chart(ctxBar, {
       type: 'bar',
       data: {
         labels: ['Ignorei', 'Pesquisei no Google', 'Acreditei/Compartilhei'],
-        datasets: [{ data: [countIgnore, countSearch, countShare], backgroundColor: ['#cbd5e1', '#0284c7', '#dc2626'], borderRadius: 6 }]
+        datasets: [{
+          data: [countIgnore, countSearch, countShare],
+          backgroundColor: ['#cbd5e1', '#0284c7', '#dc2626'],
+          borderRadius: 6
+        }]
       },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { precision: 0 },
+            grid: { color: '#f1f5f9' }
+          },
+          x: {
+            grid: { display: false },
+            ticks: { font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' } }
+          }
+        }
+      }
     });
   }
 
-  window.onload = function() { updateDashboard(); };
+  // Inicializa a página
+  window.onload = function() {
+    updateDashboard();
+  };
 </script>
+
 </body>
 </html>
