@@ -12,16 +12,18 @@
   
   <style>
     :root {
-      --bg-page: #f8fafc;
-      --surface: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --border: #cbd5e1;
-      --primary: #4f46e5;
-      --accent-cyan: #0284c7;
-      --accent-amber: #d97706;
-      --accent-rose: #dc2626;
-      --radius: 14px;
+      --bg-page: #0f172a;
+      --surface: #1e293b;
+      --surface-card: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.1);
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --accent-cyan: #38bdf8;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --radius: 16px;
     }
 
     * {
@@ -34,29 +36,34 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--bg-page);
       color: var(--text-main);
-      padding: 24px;
-      line-height: 1.5;
+      padding: 30px 20px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .dashboard-app {
-      max-width: 1000px;
-      margin: 0 auto;
+      max-width: 1050px;
+      width: 100%;
       background: var(--surface);
-      border-radius: 20px;
+      border-radius: 24px;
       border: 1px solid var(--border);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       overflow: hidden;
     }
 
     /* Cabeçalho Principal */
     .header {
-      background: #1e1b4b;
+      background: linear-gradient(135deg, #312e81 0%, #4338ca 100%);
       color: #ffffff;
-      padding: 24px 32px;
+      padding: 28px 36px;
+      border-bottom: 1px solid var(--border);
     }
 
     .header h1 {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 800;
       letter-spacing: -0.5px;
     }
@@ -66,25 +73,26 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
-      padding: 24px 32px 16px 32px;
-      background: #f1f5f9;
+      padding: 28px 36px 16px 36px;
+      background: rgba(15, 23, 42, 0.4);
       border-bottom: 1px solid var(--border);
     }
 
     .info-card {
-      background: #ffffff;
-      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 18px;
       border-radius: var(--radius);
       border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
     }
 
     .info-card h4 {
       font-size: 11px;
       text-transform: uppercase;
-      color: var(--primary);
+      color: var(--accent-cyan);
       font-weight: 800;
-      letter-spacing: 0.5px;
-      margin-bottom: 4px;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
     }
 
     .info-card p {
@@ -95,86 +103,110 @@
 
     /* Control Bar - Filtro Interativo */
     .filter-bar {
-      padding: 16px 32px;
-      background: #ffffff;
+      padding: 20px 36px;
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
     }
 
     .filter-bar label {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
-      color: var(--text-main);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .filter-bar select {
-      padding: 8px 16px;
-      border-radius: 8px;
+      padding: 10px 18px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       font-family: inherit;
       font-weight: 700;
       font-size: 13px;
       cursor: pointer;
       outline: none;
-      background-color: #f8fafc;
+      background-color: #0f172a;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    .filter-bar select:hover {
+      border-color: var(--primary);
     }
 
     /* Gráficos Lado a Lado */
     .charts-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 20px;
-      padding: 24px 32px;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 24px;
+      padding: 28px 36px;
     }
 
     .chart-card {
-      background: var(--surface);
+      background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 24px;
     }
 
     .chart-card h3 {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--text-main);
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .chart-container {
       position: relative;
-      height: 240px;
+      height: 250px;
       width: 100%;
     }
 
     /* Seção de Conclusões e Análises */
     .analysis-section {
-      padding: 0 32px 32px 32px;
+      padding: 0 36px 36px 36px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
 
     .analysis-block {
-      background: #f8fafc;
+      background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 22px;
+      transition: transform 0.2s ease;
+    }
+
+    .analysis-block:hover {
+      transform: translateY(-2px);
     }
 
     .analysis-block h3 {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 6px;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .analysis-block p {
-      font-size: 13px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .analysis-block strong {
       color: var(--text-main);
     }
 
@@ -183,8 +215,8 @@
         grid-template-columns: 1fr;
       }
       .research-info-grid, .filter-bar, .charts-grid, .analysis-section, .header {
-        padding-left: 16px;
-        padding-right: 16px;
+        padding-left: 20px;
+        padding-right: 20px;
       }
     }
   </style>
@@ -194,7 +226,7 @@
 <div class="dashboard-app">
   <!-- Cabeçalho -->
   <header class="header">
-    <h1>Meu Dashboard: Verdade ou Fake?</h1>
+    <h1>Meu Dashboard: Verdade ou Fake? 🔍</h1>
   </header>
 
   <!-- Informações do Projeto -->
@@ -215,7 +247,7 @@
 
   <!-- Filtro Interativo no Topo -->
   <div class="filter-bar">
-    <label for="channelFilter">⚙️ Filtro Interativo (Canal de Notícias):</label>
+    <label for="channelFilter">⚡ Filtro Interativo (Canal de Notícias):</label>
     <select id="channelFilter" onchange="updateDashboard()">
       <option value="all">Todos os Canais (21 alunos)</option>
       <option value="social">Apenas Redes Sociais / Vídeos (19 alunos)</option>
@@ -226,13 +258,13 @@
   <!-- Gráficos -->
   <main class="charts-grid">
     <div class="chart-card">
-      <h3>Gráfico 1: Canais de Notícias</h3>
+      <h3>📊 Gráfico 1: Canais de Notícias</h3>
       <div class="chart-container">
         <canvas id="pieChart"></canvas>
       </div>
     </div>
     <div class="chart-card">
-      <h3>Gráfico 2: Reação ao Vídeo Suspeito</h3>
+      <h3>📈 Gráfico 2: Reação ao Vídeo Suspeito</h3>
       <div class="chart-container">
         <canvas id="barChart"></canvas>
       </div>
@@ -242,17 +274,17 @@
   <!-- Análises, Conclusão e Relação com a Hipótese -->
   <section class="analysis-section">
     <div class="analysis-block">
-      <h3>Conclusão Final da Investigação</h3>
-      <p>A grande maioria dos estudantes não aceita o conteúdo suspeito passivamente. Diante de um vídeo surpreendente, a reação predominante é ignorar o conteúdo (52,4%) ou adotar uma postura investigativa de checagem no Google (38,1%). Apenas uma minoria (9,5%) atua como vetor de proliferação da desinformação ao acreditar e compartilhar de imediato.</p>
+      <h3>📌 Conclusão Final da Investigação</h3>
+      <p>A grande maioria dos estudantes não aceita o conteúdo suspeito passivamente. Diante de um vídeo surpreendente, a reação predominante é ignorar o conteúdo <strong>(52,4%)</strong> ou adotar uma postura investigativa de checagem no Google <strong>(38,1%)</strong>. Apenas uma minoria <strong>(9,5%)</strong> atua como vetor de proliferação da desinformação ao acreditar e compartilhar de imediato.</p>
     </div>
 
     <div class="analysis-block">
-      <h3>Verificação Crítica da IA</h3>
-      <p><strong>Concordo com a análise da IA.</strong> Os números brutos da base provam que 19 dos 21 alunos (90,5%) não compartilharam a informação precipitadamente. A soma dos estudantes que ignoraram (11) ou foram pesquisar no Google (8) supera amplamente os que demonstraram credulidade cega (2).</p>
+      <h3>🤖 Verificação Crítica da IA</h3>
+      <p><strong>Concordo com a análise da IA.</strong> Os números brutos da base provam que <strong>19 dos 21 alunos (90,5%)</strong> não compartilharam a informação precipitadamente. A soma dos estudantes que ignoraram (11) ou foram pesquisar no Google (8) supera amplamente os que demonstraram credulidade cega (2).</p>
     </div>
 
     <div class="analysis-block">
-      <h3>Relação com a Hipótese</h3>
+      <h3>🎯 Relação com a Hipótese</h3>
       <p>A hipótese inicial foi <strong>REFUTADA</strong>. Ao acionar o <em>Filtro Interativo</em> e isolar o grupo que consome conteúdo "Apenas em Redes Sociais / Vídeos" (19 alunos), os dados revelaram que 8 alunos checam no Google e 9 ignoram, mantendo os mesmos 2 únicos alunos que acreditaram. Isso prova que o consumo de notícias por redes sociais não se traduz em aceitação ingênua ou automática.</p>
     </div>
   </section>
@@ -304,7 +336,7 @@
     const countSearch = filtered.filter(d => d.reacao === "Fiquei na dúvida e fui pesquisar no Google").length;
     const countShare = filtered.filter(d => d.reacao === "Acreditei e comentei/compartilhei").length;
 
-    // Renderizar Gráfico de Pizza (Doughnut)
+    // Renderizar Gráfico de Pizza (Doughnut Dark)
     const ctxPie = document.getElementById('pieChart').getContext('2d');
     if (pieChartInstance) pieChartInstance.destroy();
     
@@ -314,7 +346,7 @@
         labels: ['Redes Sociais / Vídeos', 'Não acompanha notícias'],
         datasets: [{
           data: [countSocial, countNone],
-          backgroundColor: ['#4f46e5', '#d97706'],
+          backgroundColor: ['#6366f1', '#fbbf24'],
           borderWidth: 0
         }]
       },
@@ -324,14 +356,14 @@
         plugins: {
           legend: {
             position: 'bottom',
-            labels: { font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' } }
+            labels: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' } }
           }
         },
-        cutout: '60%'
+        cutout: '65%'
       }
     });
 
-    // Renderizar Gráfico de Barras
+    // Renderizar Gráfico de Barras Dark
     const ctxBar = document.getElementById('barChart').getContext('2d');
     if (barChartInstance) barChartInstance.destroy();
 
@@ -341,8 +373,8 @@
         labels: ['Ignorei', 'Pesquisei no Google', 'Acreditei/Compartilhei'],
         datasets: [{
           data: [countIgnore, countSearch, countShare],
-          backgroundColor: ['#cbd5e1', '#0284c7', '#dc2626'],
-          borderRadius: 6
+          backgroundColor: ['#64748b', '#38bdf8', '#fb7185'],
+          borderRadius: 8
         }]
       },
       options: {
@@ -354,12 +386,12 @@
         scales: {
           y: {
             beginAtZero: true,
-            ticks: { precision: 0 },
-            grid: { color: '#f1f5f9' }
+            ticks: { color: '#94a3b8', precision: 0 },
+            grid: { color: 'rgba(255, 255, 255, 0.05)' }
           },
           x: {
             grid: { display: false },
-            ticks: { font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' } }
+            ticks: { color: '#94a3b8', font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' } }
           }
         }
       }
