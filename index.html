@@ -3,87 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Interativo - Verdade ou Fake?</title>
+  <title>Meu Dashboard: Verdade ou Fake?</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <!-- Chart.js CDN -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<div class="dashboard-wrapper">
-  <header class="dashboard-header">
-    <div class="header-content">
-      <span class="badge">Pesquisa Escolar</span>
-      <h1>Verdade ou Fake? 🔍</h1>
-      <p>Análise dos hábitos de consumo de informação e reação a conteúdos suspeitos</p>
-    </div>
-    
-    <div class="filter-card">
-      <label for="channelFilter">3. Filtro Interativo:</label>
-      <div class="select-wrapper">
+<div class="window-container">
+  <!-- Sidebar lateral -->
+  <aside class="sidebar">
+    <div class="icon-btn active">🏠</div>
+    <div class="icon-btn">📊</div>
+    <div class="icon-btn">🥧</div>
+    <div class="icon-btn">⚙️</div>
+  </aside>
+
+  <!-- Conteúdo Principal -->
+  <main class="main-content">
+    <!-- Topbar Roxa -->
+    <header class="topbar">
+      <h1>Meu Dashboard: Verdade ou Fake?</h1>
+      <div class="filter-wrapper">
         <select id="channelFilter" onchange="updateDashboard()">
-          <option value="all">Todos os Canais (21 alunos)</option>
-          <option value="social">Apenas Redes Sociais / Vídeos (19 alunos)</option>
-          <option value="none">Não costumam acompanhar notícias (2 alunos)</option>
+          <option value="all">Todos</option>
+          <option value="social">Apenas Redes Sociais / Vídeos</option>
+          <option value="none">Não costumo acompanhar notícias</option>
         </select>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- Metric Cards -->
-  <section class="cards-grid">
-    <div class="card">
-      <div class="card-icon bg-blue-soft">👥</div>
-      <div class="card-info">
-        <span class="card-title">Total de Respostas</span>
-        <div class="card-value" id="cardTotal">21</div>
+    <!-- Gráficos Lado a Lado -->
+    <div class="charts-row">
+      <!-- Card Gráfico 1 -->
+      <div class="chart-card">
+        <h3>Gráfico 1</h3>
+        <h2>Onde a turma consome notícias?</h2>
+        <div class="chart-box">
+          <canvas id="pieChart"></canvas>
+        </div>
       </div>
-    </div>
-    
-    <div class="card">
-      <div class="card-icon bg-emerald-soft">🔎</div>
-      <div class="card-info">
-        <span class="card-title">Pesquisaram no Google</span>
-        <div class="card-value text-emerald" id="cardPesquisaram">8 (38,1%)</div>
-      </div>
-    </div>
 
-    <div class="card">
-      <div class="card-icon bg-rose-soft">⚠️</div>
-      <div class="card-info">
-        <span class="card-title">Acreditaram e Compartilharam</span>
-        <div class="card-value text-rose" id="cardAcreditaram">2 (9,5%)</div>
+      <!-- Card Gráfico 2 -->
+      <div class="chart-card">
+        <h3>Gráfico 2</h3>
+        <h2>Reação ao vídeo do canguru</h2>
+        <div class="chart-box">
+          <canvas id="barChart"></canvas>
+        </div>
       </div>
     </div>
-  </section>
-
-  <!-- Charts Grid -->
-  <section class="charts-grid">
-    <!-- Chart 1: Pizza -->
-    <div class="chart-card">
-      <div class="chart-header">
-        <h2>1. Gráfico de Pizza</h2>
-        <span class="chart-subtitle">Onde a turma consome notícias?</span>
-      </div>
-      <div class="chart-container">
-        <canvas id="pieChart"></canvas>
-      </div>
-    </div>
-
-    <!-- Chart 2: Barras -->
-    <div class="chart-card">
-      <div class="chart-header">
-        <h2>2. Gráfico de Barras</h2>
-        <span class="chart-subtitle">Reação ao vídeo suspeito</span>
-      </div>
-      <div class="chart-container">
-        <canvas id="barChart"></canvas>
-      </div>
-    </div>
-  </section>
+  </main>
 </div>
 
 <script src="script.js"></script>
