@@ -22,6 +22,9 @@ const data = [
   { canal: "Redes Sociais", reacao: "Acreditei e Compartilhei" }
 ];
 
+let pieChartInstance = null;
+let barChartInstance = null;
+
 function updateDashboard() {
   const filter = document.getElementById("channelFilter").value;
   
@@ -46,73 +49,57 @@ function updateDashboard() {
   document.getElementById("cardAcreditaram").innerText = `${countShare} (${total ? ((countShare/total)*100).toFixed(1) : 0}%)`;
   document.getElementById("cardPesquisaram").innerText = `${countGoogle} (${total ? ((countGoogle/total)*100).toFixed(1) : 0}%)`;
 
-  // Tabela 1: Canais
-  const canalBody = document.getElementById("canalTableBody");
-  const socialPct = total ? ((countSocial/total)*100).toFixed(1) : 0;
-  const nonePct = total ? ((countNone/total)*100).toFixed(1) : 0;
+  // 1. Renderizar / Atualizar Gráfico de Pizza
+  const ctxPie = document.getElementById('pieChart').getContext('2d');
+  if (pieChartInstance) pieChartInstance.destroy();
 
-  canalBody.innerHTML = `
-    <tr>
-      <td>📱 Redes Sociais / Vídeos</td>
-      <td class="text-right">${countSocial}</td>
-      <td class="text-right">
-        <div class="bar-wrapper">
-          <span>${socialPct}%</span>
-          <div class="progress-bar"><div class="progress-fill bg-primary-fill" style="width: ${socialPct}%"></div></div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>🚫 Não costuma acompanhar</td>
-      <td class="text-right">${countNone}</td>
-      <td class="text-right">
-        <div class="bar-wrapper">
-          <span>${nonePct}%</span>
-          <div class="progress-bar"><div class="progress-fill bg-amber-fill" style="width: ${nonePct}%"></div></div>
-        </div>
-      </td>
-    </tr>
-  `;
+  pieChartInstance = new Chart(ctxPie, {
+    type: 'pie',
+    data: {
+      labels: ['Redes Sociais / Vídeos', 'Não acompanha notícias'],
+      datasets: [{
+        data: [countSocial, countNone],
+        backgroundColor: ['#4f46e5', '#f59e0b'],
+        borderWidth: 2,
+        borderColor: '#ffffff'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom' }
+      }
+    }
+  });
 
-  // Tabela 2: Reações
-  const reacaoBody = document.getElementById("reacaoTableBody");
-  const ignorePct = total ? ((countIgnore/total)*100).toFixed(1) : 0;
-  const googlePct = total ? ((countGoogle/total)*100).toFixed(1) : 0;
-  const sharePct = total ? ((countShare/total)*100).toFixed(1) : 0;
+  // 2. Renderizar / Atualizar Gráfico de Barras
+  const ctxBar = document.getElementById('barChart').getContext('2d');
+  if (barChartInstance) barChartInstance.destroy();
 
-  reacaoBody.innerHTML = `
-    <tr>
-      <td>🙈 Ignorei</td>
-      <td class="text-right">${countIgnore}</td>
-      <td class="text-right">
-        <div class="bar-wrapper">
-          <span>${ignorePct}%</span>
-          <div class="progress-bar"><div class="progress-fill bg-amber-fill" style="width: ${ignorePct}%"></div></div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>🔍 Pesquisei no Google</td>
-      <td class="text-right">${countGoogle}</td>
-      <td class="text-right">
-        <div class="bar-wrapper">
-          <span>${googlePct}%</span>
-          <div class="progress-bar"><div class="progress-fill bg-emerald-fill" style="width: ${googlePct}%"></div></div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td>📢 Acreditei e Compartilhei</td>
-      <td class="text-right">${countShare}</td>
-      <td class="text-right">
-        <div class="bar-wrapper">
-          <span>${sharePct}%</span>
-          <div class="progress-bar"><div class="progress-fill bg-rose-fill" style="width: ${sharePct}%"></div></div>
-        </div>
-      </td>
-    </tr>
-  `;
+  barChartInstance = new Chart(ctxBar, {
+    type: 'bar',
+    data: {
+      labels: ['Ignorei', 'Pesquisei no Google', 'Acreditei e Compartilhei'],
+      datasets: [{
+        label: 'Quantidade de Alunos',
+        data: [countIgnore, countGoogle, countShare],
+        backgroundColor: ['#f59e0b', '#10b981', '#f43f5e'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { stepSize: 1 } }
+      }
+    }
+  });
 }
 
-// Inicializar
+// Inicializar na carga
 updateDashboard();
