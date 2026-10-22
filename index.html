@@ -3,155 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Hábitos de Informação</title>
+  <title>Dashboard Completo - Verdade ou Fake?</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Chart.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   
   <style>
     :root {
-      --bg-page: #f1f5f9;
+      --bg-page: #f8fafc;
       --surface: #ffffff;
       --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --accent-cyan: #06b6d4;
-      --accent-amber: #f59e0b;
-      --accent-rose: #f43f5e;
-      --radius: 16px;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --primary: #4f46e5;
+      --accent-cyan: #0284c7;
+      --accent-amber: #d97706;
+      --accent-rose: #dc2626;
+      --radius: 12px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--bg-page);
       color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 30px 20px;
+      padding: 24px;
+      line-height: 1.5;
     }
 
-    /* Container Principal */
     .dashboard-app {
-      width: 100%;
-      max-width: 1000px;
+      max-width: 1050px;
+      margin: 0 auto;
       background: var(--surface);
-      border-radius: 24px;
+      border-radius: 16px;
       border: 1px solid var(--border);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
     }
 
-    /* Topbar / Cabeçalho */
     .header {
-      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+      background: #1e1b4b;
       color: #ffffff;
       padding: 24px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
     }
 
-    .header-title h1 {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
+    .header h1 { font-size: 22px; font-weight: 800; }
+    .header p { font-size: 13px; color: #cbd5e1; margin-top: 4px; }
 
-    .header-title p {
-      font-size: 13px;
-      color: #c7d2fe;
-      margin-top: 2px;
-    }
-
-    .filter-box {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 6px 14px;
-      border-radius: 12px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .filter-box label {
-      font-size: 12px;
-      font-weight: 700;
-      color: #e0e7ff;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .filter-box select {
-      background: #ffffff;
-      color: var(--text-main);
-      border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      outline: none;
-    }
-
-    /* Indicadores / Cards */
-    .metrics-grid {
+    /* Bloco 1: Estrutura da Pesquisa */
+    .research-info-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
       padding: 24px 32px 12px 32px;
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border);
     }
 
-    .metric-card {
-      background: #f8fafc;
-      border: 1px solid var(--border);
+    .info-card {
+      background: #ffffff;
+      padding: 16px;
       border-radius: var(--radius);
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
+      border: 1px solid var(--border);
     }
 
-    .metric-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-muted);
+    .info-card h4 {
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-    }
-
-    .metric-value {
-      font-size: 24px;
+      color: var(--primary);
       font-weight: 800;
-      color: var(--text-main);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
     }
 
-    /* Área dos Gráficos */
-    .content-body {
-      padding: 12px 32px 32px 32px;
+    .info-card p { font-size: 13px; font-weight: 600; color: var(--text-main); }
+
+    /* Control Bar com Filtro Interativo */
+    .filter-bar {
+      padding: 16px 32px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
+    .filter-bar label { font-size: 13px; font-weight: 700; }
+
+    .filter-bar select {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    /* Gráficos */
     .charts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       gap: 20px;
+      padding: 24px 32px;
     }
 
     .chart-card {
@@ -159,121 +117,106 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+
+    .chart-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+    .chart-container { position: relative; height: 230px; width: 100%; }
+
+    /* Análises Finais */
+    .analysis-section {
+      padding: 0 32px 32px 32px;
       display: flex;
       flex-direction: column;
+      gap: 16px;
     }
 
-    .chart-card-header {
-      margin-bottom: 16px;
-      border-bottom: 1px solid #f1f5f9;
-      padding-bottom: 12px;
+    .analysis-block {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
     }
 
-    .chart-tag {
-      font-size: 11px;
+    .analysis-block h3 {
+      font-size: 14px;
       font-weight: 800;
       color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      margin-bottom: 8px;
     }
 
-    .chart-card-header h2 {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-top: 2px;
-    }
-
-    .chart-container {
-      position: relative;
-      height: 250px;
-      width: 100%;
-    }
-
-    @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .charts-grid {
-        grid-template-columns: 1fr;
-      }
-      .metrics-grid, .content-body {
-        padding-left: 16px;
-        padding-right: 16px;
-      }
-    }
+    .analysis-block p { font-size: 13px; color: var(--text-main); }
   </style>
 </head>
 <body>
 
 <div class="dashboard-app">
-  <!-- Cabeçalho -->
   <header class="header">
-    <div class="header-title">
-      <h1>Deepfake ou Verdade? 🔍</h1>
-      <p>Hábitos de Consumo de Informação dos Estudantes</p>
-    </div>
-
-    <div class="filter-box">
-      <label for="channelFilter">Canal:</label>
-      <select id="channelFilter" onchange="updateDashboard()">
-        <option value="all">Todos os Canais (21 alunos)</option>
-        <option value="social">Apenas Redes Sociais / Vídeos (19 alunos)</option>
-        <option value="none">Não costumo acompanhar notícias (2 alunos)</option>
-      </select>
-    </div>
+    <h1>Dashboard Interativo - Investigação de Dados</h1>
+    <p>Projeto: Hábitos de Consumo de Informação e Desinformação</p>
   </header>
 
-  <!-- Métricas do Topo -->
-  <section class="metrics-grid">
-    <div class="metric-card">
-      <span class="metric-label">Total de Respostas</span>
-      <span class="metric-value" id="valTotal">21</span>
+  <!-- Estrutura Inicial da Pesquisa -->
+  <section class="research-info-grid">
+    <div class="info-card">
+      <h4>Tema</h4>
+      <p>Hábitos de Informação e Reação a Deepfakes/Fake News</p>
     </div>
-    <div class="metric-card">
-      <span class="metric-label">Pesquisaram no Google</span>
-      <span class="metric-value" id="valSearch" style="color: var(--accent-cyan);">8 (38,1%)</span>
+    <div class="info-card">
+      <h4>Pergunta de Pesquisa</h4>
+      <p>Qual é a reação primária dos estudantes ao verem vídeos suspeitos de figuras públicas?</p>
     </div>
-    <div class="metric-card">
-      <span class="metric-label">Acreditaram e Compartilharam</span>
-      <span class="metric-value" id="valShare" style="color: var(--accent-rose);">2 (9,5%)</span>
+    <div class="info-card">
+      <h4>Hipótese Inicial</h4>
+      <p>"Quando os alunos veem um vídeo duvidoso, eles acreditam imediatamente e compartilham."</p>
     </div>
   </section>
 
-  <!-- Gráficos Lado a Lado -->
-  <main class="content-body">
-    <div class="charts-grid">
-      
-      <!-- Gráfico 1 -->
-      <div class="chart-card">
-        <div class="chart-card-header">
-          <span class="chart-tag">Gráfico 1</span>
-          <h2>Por qual canal você se informa na maior parte do tempo?</h2>
-        </div>
-        <div class="chart-container">
-          <canvas id="pieChart"></canvas>
-        </div>
-      </div>
+  <!-- Filtro Conectado -->
+  <div class="filter-bar">
+    <label for="channelFilter">⚙️ Filtro Interativo (Canal de Notícias):</label>
+    <select id="channelFilter" onchange="updateDashboard()">
+      <option value="all">Todos os Canais (21 alunos)</option>
+      <option value="social">Apenas Redes Sociais / Vídeos (19 alunos)</option>
+      <option value="none">Não costumo acompanhar notícias (2 alunos)</option>
+    </select>
+  </div>
 
-      <!-- Gráfico 2 -->
-      <div class="chart-card">
-        <div class="chart-card-header">
-          <span class="chart-tag">Gráfico 2</span>
-          <h2>Reação ao ver um vídeo surpreendente de figura pública</h2>
-        </div>
-        <div class="chart-container">
-          <canvas id="barChart"></canvas>
-        </div>
+  <!-- Gráficos Complementares -->
+  <main class="charts-grid">
+    <div class="chart-card">
+      <h3>Gráfico 1: Origem das Notícias</h3>
+      <div class="chart-container">
+        <canvas id="pieChart"></canvas>
       </div>
-
+    </div>
+    <div class="chart-card">
+      <h3>Gráfico 2: Reação ao Conteúdo Suspeito</h3>
+      <div class="chart-container">
+        <canvas id="barChart"></canvas>
+      </div>
     </div>
   </main>
+
+  <!-- Conclusões e Validações da IA -->
+  <section class="analysis-section">
+    <div class="analysis-block">
+      <h3>1. Conclusão Final da Investigação</h3>
+      <p>A pesquisa revelou que a maioria dos estudantes adota uma atitude de cautela (52,4% ignoram conteúdos suspeitos e 38,1% pesquisam no Google para checar a veracidade). Apenas 9,5% propagam o conteúdo sem checar.</p>
+    </div>
+
+    <div class="analysis-block">
+      <h3>2. Verificação Crítica da IA</h3>
+      <p><strong>Concordo com a análise da IA.</strong> A evidência quantitativa provou que 90,5% dos entrevistados (19 em 21) não aceitam a informação passivamente sem antes desconfiar ou checar no Google.</p>
+    </div>
+
+    <div class="analysis-block">
+      <h3>3. Relação com a Hipótese</h3>
+      <p>A aposta inicial de que os alunos acreditariam de imediato foi <strong>REFUTADA</strong>. Ao alternar o <em>Filtro Interativo</em> para o grupo de maior consumo ("Apenas Redes Sociais"), o gráfico demonstrou que a checagem no Google (8 alunos) e a postura de ignorar (9 alunos) continuam sendo maioria esmagadora frente aos que acreditaram (2 alunos).</p>
+    </div>
+  </section>
 </div>
 
 <script>
-  // Dados exatos da sua planilha Google Forms
   const sheetData = [
     { canal: "Redes Sociais", reacao: "Ignorei" },
     { canal: "Redes Sociais", reacao: "Fiquei na dúvida e fui pesquisar no Google" },
@@ -311,101 +254,39 @@
       filtered = sheetData.filter(d => d.canal === "Não Acompanha");
     }
 
-    const total = filtered.length;
-    
-    // Contagem de canais
     const countSocial = filtered.filter(d => d.canal === "Redes Sociais").length;
     const countNone = filtered.filter(d => d.canal === "Não Acompanha").length;
 
-    // Contagem de reações
     const countIgnore = filtered.filter(d => d.reacao === "Ignorei").length;
     const countSearch = filtered.filter(d => d.reacao === "Fiquei na dúvida e fui pesquisar no Google").length;
     const countShare = filtered.filter(d => d.reacao === "Acreditei e comentei/compartilhei").length;
 
-    // Atualiza cards no topo
-    document.getElementById("valTotal").innerText = total;
-    document.getElementById("valSearch").innerText = `${countSearch} (${total ? ((countSearch/total)*100).toFixed(1) : 0}%)`;
-    document.getElementById("valShare").innerText = `${countShare} (${total ? ((countShare/total)*100).toFixed(1) : 0}%)`;
-
-    // 1. Gráfico de Pizza (Canais)
+    // Pizza
     const ctxPie = document.getElementById('pieChart').getContext('2d');
     if (pieChartInstance) pieChartInstance.destroy();
-
     pieChartInstance = new Chart(ctxPie, {
       type: 'doughnut',
       data: {
-        labels: [
-          'Apenas em redes sociais / vídeos (TikTok, Instagram, YouTube)',
-          'Não costumo acompanhar notícias'
-        ],
-        datasets: [{
-          data: [countSocial, countNone],
-          backgroundColor: ['#6366f1', '#f59e0b'],
-          borderWidth: 0,
-          hoverOffset: 6
-        }]
+        labels: ['Redes Sociais', 'Não acompanha'],
+        datasets: [{ data: [countSocial, countNone], backgroundColor: ['#4f46e5', '#d97706'] }]
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              boxWidth: 12,
-              padding: 15,
-              font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' }
-            }
-          }
-        },
-        cutout: '60%'
-      }
+      options: { responsive: true, maintainAspectRatio: false }
     });
 
-    // 2. Gráfico de Barras (Reações)
+    // Barras
     const ctxBar = document.getElementById('barChart').getContext('2d');
     if (barChartInstance) barChartInstance.destroy();
-
     barChartInstance = new Chart(ctxBar, {
       type: 'bar',
       data: {
-        labels: [
-          'Ignorei',
-          'Pesquisei no Google',
-          'Acreditei e Compartilhei'
-        ],
-        datasets: [{
-          data: [countIgnore, countSearch, countShare],
-          backgroundColor: ['#cbd5e1', '#06b6d4', '#f43f5e'],
-          borderRadius: 8,
-          maxBarThickness: 45
-        }]
+        labels: ['Ignorei', 'Pesquisei no Google', 'Acreditei/Compartilhei'],
+        datasets: [{ data: [countIgnore, countSearch, countShare], backgroundColor: ['#cbd5e1', '#0284c7', '#dc2626'], borderRadius: 6 }]
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { precision: 0, font: { family: 'Plus Jakarta Sans' } },
-            grid: { color: '#f1f5f9' }
-          },
-          x: {
-            grid: { display: false },
-            ticks: { font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' } }
-          }
-        }
-      }
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
     });
   }
 
-  window.onload = function() {
-    updateDashboard();
-  };
+  window.onload = function() { updateDashboard(); };
 </script>
-
 </body>
 </html>
